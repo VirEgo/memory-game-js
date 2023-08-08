@@ -1,4 +1,3 @@
-// import GameField from 'GameField';
 import GameField from './GameField.js';
 
 const sizesValue = document.querySelectorAll('input[name="size"]');
