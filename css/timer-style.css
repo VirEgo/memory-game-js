@@ -1,0 +1,49 @@
+/* Общий контейнер */
+#timer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Таймер */
+#timer {
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* Кнопки */
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Дополнительные стили для кнопок */
+#startButton {
+    background-color: #28a745;
+}
+
+#startButton:hover {
+    background-color: #1f8c3c;
+}
+
+#stopButton {
+    background-color: #dc3545;
+}
+
+#stopButton:hover {
+    background-color: #c82333;
+}

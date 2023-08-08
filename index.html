@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Memory Game with Leaderboard</title>
+    <script type="module" src="js/main.js" defer></script>
+</head>
+
+<body>
+
+    <div class="game-grid-selector">
+
+        <div class="input-row">
+            <input type="radio" name="size" id="size-16" value="16" checked>
+            <label for="size-16">16</label>
+        </div>
+
+        <div class="input-row">
+            <input type="radio" name="size" id="size-36" value="36">
+            <label for="size-36">36</label>
+        </div>
+
+        <div class="input-row">
+            <input type="radio" name="size" id="size-64" value="64">
+            <label for="size-64">64</label>
+        </div>
+
+        <div class="input-row">
+            <input type="radio" name="size" id="size-100" value="100">
+            <label for="size-100">100</label>
+        </div>
+    </div>
+
+
+    <div id="gameWrapper" class="game-wrapper">
+        <!-- Игровое поле будет здесь -->
+    </div>
+
+    <div id="timer-container">
+        <div id="timer">00:00:000</div>
+    </div>
+
+    <div id="leaderboard" class="leaderboard">
+        <h2>Лидерборд</h2>
+        <ul id="leaderboardList" class="leaderboard-list"></ul>
+    </div>
+
+    <button class="cta-btn" id="startNewGameBtn">Начать новую игру</button>
+    <button class="cta-btn red" id="stopGameBtn">Остановить игру</button>
+
+</body>
+
+</html>

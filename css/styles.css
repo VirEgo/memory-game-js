@@ -1,0 +1,76 @@
+@import url('./timer-style.css');
+
+body {
+    background-color: #333;
+    width: 100%;
+    height: 100vh;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-wrapper {
+    max-width: 600px;
+    max-height: 600px;
+    width: 100%;
+    height: 100%;
+    background-color: navy;
+    border-radius: 14px;
+    margin: 50px auto;
+    border: 4px solid white;
+    outline: 3px solid navy;
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(4, 100px);
+    gap: 10px;
+    padding: 10px;
+}
+
+.grid-cell {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 7px;
+
+    line-height: 1;
+    font-size: 20px;
+    color: navy;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.grid-cell[data-active="true"] {
+    opacity: 1;
+    background-color: navy;
+    color: white;
+    outline: 1px solid white;
+}
+
+.game-grid-selector {
+    display: flex;
+    gap: 15px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 14px;
+    margin: auto;
+}
+
+.input-row {
+    cursor: pointer;
+}
+
+.cta-btn {
+    padding: 15px 35px;
+    background-color: #02da7c;
+    color: white;
+    text-align: center;
+    border-radius: 35px;
+    border: none;
+    cursor: pointer;
+    margin: auto;
+    font-size: 24px;
+}
