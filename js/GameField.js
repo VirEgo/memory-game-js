@@ -13,10 +13,11 @@ export default class GameField {
 
 		this.timer = new Timer(document.getElementById('timer'));
 		this.leaderboard = new Leaderboard();
-		this.leaderboard.loadScoresFromLocalStorage();
+		this.gridContainer = document.querySelector('.grid-container');
+		// this.gridSize.loadScoresFromLocalStorage();
 
 		this.timerStopped = false; // Флаг для отслеживания остановки таймера
-
+		this.moveCount = 0;
 		this.initApp();
 	}
 
@@ -37,9 +38,24 @@ export default class GameField {
 	}
 
 	setStyleToWrapper() {
-		const gridTemplate = `repeat(${this.width}, minmax(50px,1fr))`;
-		this.$wrapper.style.gridTemplateColumns = gridTemplate;
-		this.$wrapper.style.gridTemplateRows = gridTemplate;
+		console.log(this.width, 'this.width');
+		const multipluWidth = Math.pow(this.width, 2);
+		// Вычисление количества строк и столбцов сетки
+		const rows = Math.sqrt(multipluWidth);
+		const columns = Math.ceil(multipluWidth / rows);
+		// const gridContainer = document.querySelector('.grid-container');
+
+		// const gridTemplate = `repeat(${this.width}, minmax(calc(calc(600px / ${this.width}) - 50px),1fr))`;
+		// const gridTemplate = `repeat(auto-fill, minmax(100px, 1fr))`;
+		// this.$wrapper.style.gridTemplateColumns = gridTemplate;
+		// this.$wrapper.style.gridTemplateRows = gridTemplate;
+
+		// Настройка сетки
+		this.$wrapper.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+		this.$wrapper.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+		this.$wrapper.style.opacity = 1;
+		this.$wrapper.style.transform = 'scale(1)';
 
 		this.doubledArray = this.numberArray();
 		this.doubledArrayLength = this.doubledArray.length;
@@ -47,13 +63,25 @@ export default class GameField {
 
 	buildTile(value) {
 		const tileElement = document.createElement('div');
-		tileElement.classList.add('grid-cell');
+		tileElement.classList.add('grid-cell', 'card');
+
+		const innerCard = document.createElement('div');
+		const innerCardFront = document.createElement('div');
+		innerCardFront.classList.add('card-front');
+
+		const innerCardBack = document.createElement('div');
+		innerCardBack.classList.add('card-back');
+		innerCardBack.textContent = value;
+		innerCard.classList.add('card-inner');
+		innerCard.append(innerCardFront, innerCardBack);
+
+		tileElement.appendChild(innerCard);
 		tileElement.setAttribute('data-value', value);
 		tileElement.setAttribute('data-active', 'false');
 
-		tileElement.addEventListener('click', () =>
-			this.handleTileClick(tileElement, value),
-		);
+		tileElement.addEventListener('click', () => {
+			this.handleTileClick(tileElement, value);
+		});
 
 		return tileElement;
 	}
@@ -70,8 +98,8 @@ export default class GameField {
 		if (!this.timer.isRunning()) {
 			this.timer.start();
 		}
-
-		tileElement.innerText = value;
+		tileElement.classList.add('active');
+		tileElement.querySelector('.card-back').innerText = value;
 
 		if (!this.activeTile) {
 			this.activeTile = tileElement;
@@ -82,11 +110,12 @@ export default class GameField {
 
 		if (activeValue === value) {
 			this.matchTiles(tileElement);
+			this.incrementMoveCount();
 			return;
 		}
 
 		this.isWaitingForTurn = true;
-
+		this.incrementMoveCount();
 		setTimeout(() => {
 			this.resetMismatchedTiles(tileElement);
 		}, 1000);
@@ -104,8 +133,8 @@ export default class GameField {
 			this.timer.stop();
 
 			const score = {
-				time: this.timer.elapsedTime(),
-				moves: this.totalDoneTiles / 2,
+				time: this.timer.formatMilliseconds(this.timer.elapsedTime()),
+				moves: this.moveCount + 1,
 			};
 
 			this.leaderboard.addScore(score);
@@ -114,8 +143,11 @@ export default class GameField {
 	}
 
 	resetMismatchedTiles(tileElement) {
-		this.activeTile.innerText = null;
-		tileElement.innerText = null;
+		this.activeTile.querySelector('.card-back').innerText = null;
+		this.activeTile.classList.remove('active');
+
+		tileElement.querySelector('.card-back').innerText = null;
+		tileElement.classList.remove('active');
 		this.isWaitingForTurn = false;
 		this.activeTile = null;
 	}
@@ -128,7 +160,16 @@ export default class GameField {
 			const item = this.buildTile(value);
 			this.doubledArray.splice(randomIndex, 1);
 			this.$wrapper.appendChild(item);
+			setTimeout(() => {
+				item.style.opacity = 1;
+				item.style.transform = 'translateY(0)';
+			}, i * 50); // Задержка появления для каждой карточки
 		}
+	}
+
+	incrementMoveCount() {
+		this.moveCount++;
+		console.log(this.moveCount);
 	}
 
 	resetGame() {

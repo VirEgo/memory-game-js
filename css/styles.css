@@ -1,69 +1,223 @@
 @import url('./timer-style.css');
+@import url('./card.css');
+@import url('./buttons.css');
+@import url('./colors.css');
+
+.disabled,
+*[disabled],
+*[disabled="true"] {
+    opacity: .5;
+    pointer-events: none;
+}
 
 body {
-    background-color: #333;
+    background-color: #eff3f8;
     width: 100%;
     height: 100vh;
     padding: 0px;
     margin: 0px;
     display: flex;
     flex-direction: column;
+
+    &>* {
+        font-family: 'Montserrat', sans-serif;
+    }
+}
+
+.game-settings {
+    width: 200px;
+    height: calc(100vh - 50px);
+    z-index: 2;
+    background-color: white;
+    padding: 10px;
+    border-radius: 14px;
+}
+
+
+.mode-selector {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.selector-item {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid white;
+    outline: 3px solid var(--cyan-100);
+    border-radius: 7px;
+    background-color: white;
+    cursor: pointer;
+
+    transition: outline .15s ease, background-color .15s ease;
+
+    &.active {
+        border: 2px solid white;
+        outline: 3px solid var(--cyan-900);
+        border-radius: 7px;
+        background-color: var(--cyan-500);
+    }
+
+    &:hover:not(.active) {
+        outline: 3px solid var(--cyan-900);
+        transition: outline .15s ease, background-color .15s ease;
+        background-color: var(--cyan-200);
+    }
+}
+
+.size-option {
+    cursor: pointer;
+    /* margin: 5px; */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.size-option.active {
+    background-color: var(--cyan-500);
+    color: #fff;
+}
+
+.selector-item .icon {
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    border-radius: 2px;
+    padding: 2px;
+}
+
+.selector-item .icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.main-playground {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 25px;
 }
 
 .game-wrapper {
-    max-width: 600px;
-    max-height: 600px;
+    flex: 1;
+}
+
+.game-field {
+    max-width: 500px;
+    max-height: 500px;
     width: 100%;
     height: 100%;
-    background-color: navy;
+    flex-shrink: 0;
+    background-color: var(--cyan-600);
     border-radius: 14px;
-    margin: 50px auto;
+    margin: 0px auto;
     border: 4px solid white;
-    outline: 3px solid navy;
+    outline: 3px solid var(--cyan-900);
     display: grid;
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: repeat(4, 100px);
     gap: 10px;
     padding: 10px;
+
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.5s, transform 0.5s;
 }
 
 .grid-cell {
     width: 100%;
     height: 100%;
+
+    min-height: 40px;
+    min-width: 40px;
+
     background-color: #fff;
     border-radius: 7px;
 
     line-height: 1;
     font-size: 20px;
-    color: navy;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     font-family: sans-serif;
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+
+/* .game-field.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.game-field.show .grid-cell {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
+} */
+
+.grid-cell.active {
+    background-color: var(--blue-50);
+    color: var(--cyan-600);
 }
 
 .grid-cell[data-active="true"] {
     opacity: 1;
-    background-color: navy;
+    background-color: var(--green-400);
     color: white;
-    outline: 1px solid white;
+    outline: 1px solid var(--green-400);
 }
 
 .game-grid-selector {
     display: flex;
-    gap: 15px;
+    gap: 5px;
     background-color: white;
-    padding: 15px;
     border-radius: 14px;
-    margin: auto;
+}
+
+.leaderboard-wrapper {
+    /* position: absolute; */
+    right: 10px;
+    top: 10px;
+    width: 300px;
+    height: calc(100vh - 50px);
+    z-index: 2;
+    background-color: white;
+    padding: 10px;
+    border-radius: 14px;
+}
+
+.leaderboard h2 {
+    text-align: center;
 }
 
 .input-row {
     cursor: pointer;
 }
 
-.cta-btn {
+.game-controls {
+    display: flex;
+    gap: 25px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* .cta-btn {
     padding: 15px 35px;
     background-color: #02da7c;
     color: white;
@@ -73,4 +227,4 @@ body {
     cursor: pointer;
     margin: auto;
     font-size: 24px;
-}
+} */

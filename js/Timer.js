@@ -32,16 +32,27 @@ export default class Timer {
 		this.updateTimerDisplay(elapsedTime);
 	}
 
-	updateTimerDisplay(elapsedTime) {
-		const milliseconds = elapsedTime % 1000;
-		const totalSeconds = Math.floor(elapsedTime / 1000);
+	formatMilliseconds(milliseconds) {
+		const totalSeconds = Math.floor(milliseconds / 1000);
 		const minutes = Math.floor(totalSeconds / 60);
 		const seconds = totalSeconds % 60;
+		const remainingMilliseconds = milliseconds % 1000;
 
-		const formattedTime = `${this.formatTime(minutes)}:${this.formatTime(
+		return `${this.formatTime(minutes)}:${this.formatTime(
 			seconds,
-		)}.${this.formatTime(milliseconds, 3)}`;
-		this.timerElement.textContent = formattedTime;
+		)}.${this.formatTime(remainingMilliseconds, 3)}`;
+	}
+
+	updateTimerDisplay(elapsedTime) {
+		// const milliseconds = elapsedTime % 1000;
+		// const totalSeconds = Math.floor(elapsedTime / 1000);
+		// const minutes = Math.floor(totalSeconds / 60);
+		// const seconds = totalSeconds % 60;
+
+		// const formattedTime = `${this.formatTime(minutes)}:${this.formatTime(
+		// 	seconds,
+		// )}.${this.formatTime(milliseconds, 3)}`;
+		this.timerElement.textContent = this.formatMilliseconds(elapsedTime);
 	}
 
 	isRunning() {
