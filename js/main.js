@@ -119,9 +119,10 @@ const stopGameBtn = document.getElementById('stopGameBtn');
 
 let gameField = null; // Экземпляр класса GameField
 
-startNewGameBtn.addEventListener('click', () => startNewGame(gridSize));
+startNewGameBtn.addEventListener('click', () => startNewGame());
 
 function startNewGame(fieldSize = 4) {
+	console.log('Srart new game', fieldSize);
 	document.querySelector('.main-content').setAttribute('disabled', true);
 	if (gameField) {
 		gameField.resetGame();
@@ -155,6 +156,14 @@ function isMobileDevice() {
 	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 		navigator.userAgent,
 	);
+}
+
+// IMage input handler
+
+themeInput.addEventListener('change', (e) => imageInputHandler(e));
+
+function imageInputHandler(e) {
+	console.log(e.target.value);
 }
 
 document.addEventListener('DOMContentLoaded', startNewGame);

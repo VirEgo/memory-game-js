@@ -156,6 +156,7 @@ export default class GameField {
 		this.$wrapper.innerHTML = '';
 		for (let i = 0; i < this.doubledArrayLength; i++) {
 			const randomIndex = Math.floor(Math.random() * this.doubledArray.length);
+			console.log(randomIndex, 'randomIndex');
 			const value = this.doubledArray[randomIndex];
 			const item = this.buildTile(value);
 			this.doubledArray.splice(randomIndex, 1);
